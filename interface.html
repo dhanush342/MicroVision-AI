@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MicroVision AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0b203c",
+                        secondary: "#00C896", // Emerald green for metrics
+                        accent: "#38bdf8", // Sky blue for tech accents
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#0B1F3B", // Deep ocean blue
+                        "surface-dark": "#122a45",
+                        "surface-darker": "#081628",
+                    },
+                    fontFamily: {
+                        sans: ["Noto Sans", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for code blocks */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 200, 150, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-secondary selection:text-primary">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+<div class="flex items-center gap-3 text-white">
+<div class="size-6 text-secondary">
+<span class="material-symbols-outlined !text-[24px]">view_in_ar</span>
+</div>
+<h2 class="font-display text-xl font-bold tracking-tight">MicroVision AI</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-center gap-8">
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#research">Research</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#solution">Solution</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#performance">Performance</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#api">API</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="hidden sm:block text-slate-400 hover:text-white transition-colors" href="https://github.com" target="_blank">
+<span class="sr-only">GitHub</span>
+<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<button class="js-open-demo flex items-center justify-center rounded-lg bg-secondary/10 border border-secondary/20 px-4 py-2 text-sm font-bold text-secondary transition hover:bg-secondary/20 hover:border-secondary/40" type="button">
+                        Try Live Demo
+                    </button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<main class="flex-grow">
+<section class="relative isolate overflow-hidden bg-background-dark pt-14 lg:pt-20 pb-20">
+<!-- Background Effects -->
+<div class="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a3b5c] via-background-dark to-background-dark opacity-50"></div>
+<div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-surface-darker shadow-xl shadow-indigo-600/10 ring-1 ring-white/5 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
+<div class="mb-8 flex justify-center">
+<div class="relative rounded-full px-3 py-1 text-sm leading-6 text-slate-400 ring-1 ring-white/10 hover:ring-white/20">
+                                Latest research published in <a class="font-semibold text-secondary" href="#"><span aria-hidden="true" class="absolute inset-0"></span>Nature Communications <span aria-hidden="true">→</span></a>
+</div>
+</div>
+<h1 class="mt-2 font-display text-4xl font-bold tracking-tight text-white sm:text-6xl">
+                            Detecting the <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-blue-400">Invisible Threat</span>
+</h1>
+<p class="mt-6 text-lg leading-8 text-slate-300">
+                            High-performance intelligent microplastic detection system for researchers and government agencies. Leveraging an ensemble of EfficientNet and ResNet architectures to achieve 94% classification accuracy.
+                        </p>
+<div class="mt-10 flex items-center justify-center gap-x-6">
+<button class="js-open-demo rounded-lg bg-white px-5 py-3 text-sm font-semibold text-primary shadow-sm hover:bg-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all" type="button">
+                                Try Live Demo
+                            </button>
+<button class="group flex items-center gap-2 text-sm font-semibold leading-6 text-white hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">description</span> View Research Paper
+                            </button>
+<button class="group flex items-center gap-2 text-sm font-semibold leading-6 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">code</span> API Docs
+                            </button>
+</div>
+</div>
+<!-- Abstract Visualization -->
+<div class="mt-16 flow-root sm:mt-24">
+<div class="-m-2 rounded-xl bg-white/5 p-2 ring-1 ring-inset ring-white/10 lg:-m-4 lg:rounded-2xl lg:p-4 backdrop-blur-sm">
+<div class="relative rounded-lg bg-surface-darker shadow-2xl overflow-hidden aspect-[16/9] sm:aspect-[2/1] lg:aspect-[21/9] flex items-center justify-center border border-white/5">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&amp;w=2000&amp;auto=format&amp;fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" data-alt="Microscopic view of plastic particles with overlay"></div>
+<div class="relative z-10 grid grid-cols-3 gap-8 w-full max-w-4xl p-6">
+<!-- Scanning overlay UI simulation -->
+<div class="col-span-3 flex justify-between items-end border-b border-white/10 pb-4 mb-4">
+<div>
+<div class="text-xs text-secondary font-mono mb-1">SCANNING_PROTOCOL_V4.2</div>
+<div class="text-2xl text-white font-display font-bold">Polyethylene (PE)</div>
+</div>
+<div class="text-right">
+<div class="text-xs text-slate-400 font-mono mb-1">CONFIDENCE SCORE</div>
+<div class="text-3xl text-secondary font-display font-bold">98.4%</div>
+</div>
+</div>
+<!-- Heatmap simulation -->
+<div class="absolute top-1/2 left-1/4 w-32 h-32 bg-secondary/30 rounded-full blur-3xl"></div>
+<div class="absolute top-1/3 right-1/3 w-24 h-24 bg-blue-500/30 rounded-full blur-2xl"></div>
+<!-- Bounding Box UI -->
+<div class="absolute top-[30%] left-[40%] w-48 h-32 border border-secondary/60 rounded-sm bg-secondary/5 flex flex-col justify-between p-2">
+<div class="flex justify-between items-center">
+<span class="text-[10px] bg-secondary text-primary px-1 font-bold">DETECTED</span>
+<span class="text-[10px] text-secondary font-mono">ID: MP-892</span>
+</div>
+<div class="w-full bg-surface-darker/50 h-1 mt-auto rounded-full overflow-hidden">
+<div class="bg-secondary w-[94%] h-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section (Light) -->
+<section class="bg-slate-50 py-24 sm:py-32" id="research">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl lg:text-center">
+<h2 class="text-base font-semibold leading-7 text-secondary uppercase tracking-wider">The Global Crisis</h2>
+<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl font-display">The Scale of Microplastic Contamination</p>
+<p class="mt-6 text-lg leading-8 text-slate-600">
+                            Microplastics are ubiquitous in our oceans and water systems. Traditional manual detection methods via microscopy are labor-intensive, prone to human error, and cannot scale to meet the crisis.
+                        </p>
+</div>
+<div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+<dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+<div class="flex flex-col bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+<dt class="flex items-center gap-x-3 text-base font-bold leading-7 text-slate-900 font-display">
+<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+<span class="material-symbols-outlined text-white">public</span>
+</span>
+                                    14 Million Tons
+                                </dt>
+<dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+<p class="flex-auto">Estimated amount of microplastics residing on the ocean floor, contaminating deep-sea ecosystems previously thought pristine.</p>
+</dd>
+</div>
+<div class="flex flex-col bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+<dt class="flex items-center gap-x-3 text-base font-bold leading-7 text-slate-900 font-display">
+<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+<span class="material-symbols-outlined text-white">health_and_safety</span>
+</span>
+                                    Bioaccumulation
+                                </dt>
+<dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+<p class="flex-auto">Microplastics enter the food chain through plankton and fish, eventually impacting human health with potential toxicity.</p>
+</dd>
+</div>
+<div class="flex flex-col bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+<dt class="flex items-center gap-x-3 text-base font-bold leading-7 text-slate-900 font-display">
+<span class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+<span class="material-symbols-outlined text-white">manage_search</span>
+</span>
+                                    Detection Gap
+                                </dt>
+<dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+<p class="flex-auto">Current spectroscopic methods are slow. Manual counting has a 30% error rate. We need automated, high-throughput solutions.</p>
+</dd>
+</div>
+</dl>
+</div>
+</div>
+</section>
+<!-- Solution / Architecture (Dark) -->
+<section class="bg-surface-darker py-24 sm:py-32 border-t border-white/5" id="solution">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl lg:mx-0">
+<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl font-display">Ensemble Learning Architecture</h2>
+<p class="mt-6 text-lg leading-8 text-slate-400">
+                            Our "Dual-Stream" approach combines the efficiency of EfficientNet-B0 with the depth of ResNet-50, fused through a custom weighted averaging layer.
+                        </p>
+</div>
+<!-- Architecture Diagram -->
+<div class="mt-16 relative">
+<!-- Connecting Lines (bg) -->
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-slate-700 to-transparent -translate-y-1/2 hidden lg:block z-0"></div>
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-4 relative z-10">
+<!-- Step 1 -->
+<div class="bg-surface-dark border border-white/10 rounded-xl p-6 hover:border-secondary/50 transition-colors group">
+<div class="flex items-center justify-between mb-4">
+<div class="size-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold border border-blue-500/30">01</div>
+<span class="material-symbols-outlined text-slate-500 group-hover:text-blue-400">cloud_upload</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Ingestion</h3>
+<p class="text-sm text-slate-400">Raw microscopic imagery (µFTIR or optical) is uploaded securely via encrypted endpoints.</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-dark border border-white/10 rounded-xl p-6 hover:border-secondary/50 transition-colors group">
+<div class="flex items-center justify-between mb-4">
+<div class="size-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold border border-purple-500/30">02</div>
+<span class="material-symbols-outlined text-slate-500 group-hover:text-purple-400">tune</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Preprocessing</h3>
+<p class="text-sm text-slate-400">Noise reduction, contrast enhancement (CLAHE), and normalization to standard tensors.</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-dark border border-secondary/30 rounded-xl p-6 shadow-[0_0_30px_rgba(0,200,150,0.1)] relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent pointer-events-none"></div>
+<div class="flex items-center justify-between mb-4">
+<div class="size-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary font-bold border border-secondary/30">03</div>
+<span class="material-symbols-outlined text-secondary animate-pulse">psychology</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Ensemble Model</h3>
+<p class="text-sm text-slate-300">Parallel processing through EfficientNet &amp; ResNet50. Soft-voting mechanism determines final class.</p>
+</div>
+<!-- Step 4 -->
+<div class="bg-surface-dark border border-white/10 rounded-xl p-6 hover:border-secondary/50 transition-colors group">
+<div class="flex items-center justify-between mb-4">
+<div class="size-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 font-bold border border-orange-500/30">04</div>
+<span class="material-symbols-outlined text-slate-500 group-hover:text-orange-400">api</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">JSON Output</h3>
+<p class="text-sm text-slate-400">Returns class probabilities, heatmap coordinates (Grad-CAM), and aggregate statistics.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Performance Metrics Dashboard -->
+<section class="bg-background-dark py-24" id="performance">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mb-12">
+<h2 class="text-3xl font-bold tracking-tight text-white font-display">Performance Metrics</h2>
+<p class="mt-2 text-slate-400">Validated on the Microplastic Image Dataset (MPID) with 5-fold cross-validation.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- KPI Card -->
+<div class="bg-surface-dark rounded-xl p-8 border border-white/5 flex flex-col justify-center items-center text-center">
+<div class="text-6xl font-display font-bold text-secondary glow-text mb-2">94.2%</div>
+<div class="text-sm font-medium text-slate-400 uppercase tracking-widest">Global Accuracy</div>
+<div class="mt-6 flex gap-4 w-full">
+<div class="flex-1 bg-surface-darker rounded p-3">
+<div class="text-2xl font-bold text-white">96%</div>
+<div class="text-xs text-slate-500">Precision</div>
+</div>
+<div class="flex-1 bg-surface-darker rounded p-3">
+<div class="text-2xl font-bold text-white">92%</div>
+<div class="text-xs text-slate-500">Recall</div>
+</div>
+</div>
+</div>
+<!-- Confusion Matrix Visualization (CSS Grid) -->
+<div class="bg-surface-dark rounded-xl p-8 border border-white/5 col-span-1 lg:col-span-2">
+<h3 class="text-white font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-sm">grid_on</span> Confusion Matrix
+                            </h3>
+<div class="grid grid-cols-4 gap-1 text-center text-xs">
+<!-- Headers -->
+<div class="p-2"></div>
+<div class="p-2 text-slate-400 font-bold">PE</div>
+<div class="p-2 text-slate-400 font-bold">PP</div>
+<div class="p-2 text-slate-400 font-bold">PS</div>
+<!-- Row 1 -->
+<div class="p-2 text-slate-400 font-bold flex items-center justify-end">PE</div>
+<div class="bg-secondary/90 text-primary p-4 rounded font-bold">98%</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">1%</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">1%</div>
+<!-- Row 2 -->
+<div class="p-2 text-slate-400 font-bold flex items-center justify-end">PP</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">2%</div>
+<div class="bg-secondary/80 text-primary p-4 rounded font-bold">95%</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">3%</div>
+<!-- Row 3 -->
+<div class="p-2 text-slate-400 font-bold flex items-center justify-end">PS</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">3%</div>
+<div class="bg-surface-darker text-slate-500 p-4 rounded border border-white/5">4%</div>
+<div class="bg-secondary/70 text-primary p-4 rounded font-bold">93%</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- API Section -->
+<section class="bg-surface-darker py-24 relative overflow-hidden" id="api">
+<!-- Decorative Blobs -->
+<div class="absolute top-0 right-0 -translate-y-12 translate-x-12 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-12 items-center">
+<div class="lg:w-1/2">
+<div class="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-sm font-medium text-accent mb-6">
+                                Developer Ready
+                            </div>
+<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl font-display mb-6">
+                                Integrate with a single POST request
+                            </h2>
+<p class="text-lg text-slate-400 mb-8">
+                                Our REST API is designed for high-throughput laboratory environments. Send batches of images and receive structured JSON data instantly.
+                            </p>
+<ul class="space-y-4 text-slate-300 mb-8">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                                    Python, Node.js, and cURL support
+                                </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                                    Webhooks for batch processing
+                                </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                                    Enterprise-grade SSL encryption
+                                </li>
+</ul>
+<button class="rounded-lg bg-accent/20 border border-accent/50 px-5 py-3 text-sm font-bold text-accent hover:bg-accent/30 transition-all">
+                                Read Documentation
+                            </button>
+</div>
+<!-- Code Window -->
+<div class="lg:w-1/2 w-full">
+<div class="rounded-xl overflow-hidden bg-[#0d1117] border border-slate-700 shadow-2xl">
+<div class="flex items-center px-4 py-2 border-b border-slate-800 bg-[#161b22]">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</div>
+<div class="mx-auto text-xs text-slate-400 font-mono">detect.py</div>
+</div>
+<div class="p-6 overflow-x-auto custom-scrollbar">
+<pre class="font-mono text-sm leading-relaxed"><span class="text-pink-400">import</span> requests
+
+api_key = <span class="text-green-400">"mv_live_83929492..."</span>
+url = <span class="text-green-400">"https://api.microvision.ai/v1/detect"</span>
+
+files = {<span class="text-green-400">'image'</span>: open(<span class="text-green-400">'sample_slide.jpg'</span>, <span class="text-green-400">'rb'</span>)}
+
+response = requests.post(
+    url, 
+    headers={<span class="text-green-400">'Authorization'</span>: <span class="text-green-400">f'Bearer {api_key}'</span>},
+    files=files
+)
+
+<span class="text-slate-500"># Returns JSON with classification &amp; confidence</span>
+print(response.json())</pre>
+</div>
+<div class="bg-[#161b22] px-6 py-4 border-t border-slate-800">
+<div class="font-mono text-xs text-slate-500 mb-2">OUTPUT PREVIEW</div>
+<pre class="font-mono text-xs text-green-400">{
+  "class": "Polyethylene",
+  "confidence": 0.9842,
+  "heatmap_url": "https://cdn.microvision..."
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA / Use Cases -->
+<section class="bg-background-dark py-24 border-t border-white/5">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl text-center mb-16">
+<h2 class="text-3xl font-bold tracking-tight text-white font-display">Trusted by Leaders</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-dark border border-white/5 p-6 rounded-lg hover:bg-surface-darker transition-colors cursor-default">
+<span class="material-symbols-outlined text-blue-400 text-4xl mb-4">science</span>
+<h3 class="text-white font-bold text-lg">Marine Research Labs</h3>
+<p class="text-slate-400 text-sm mt-2">Accelerating sample processing for oceanographic surveys by 400%.</p>
+</div>
+<div class="bg-surface-dark border border-white/5 p-6 rounded-lg hover:bg-surface-darker transition-colors cursor-default">
+<span class="material-symbols-outlined text-green-400 text-4xl mb-4">water_drop</span>
+<h3 class="text-white font-bold text-lg">Wastewater Facilities</h3>
+<p class="text-slate-400 text-sm mt-2">Real-time effluent monitoring to ensure compliance with new environmental regulations.</p>
+</div>
+<div class="bg-surface-dark border border-white/5 p-6 rounded-lg hover:bg-surface-darker transition-colors cursor-default">
+<span class="material-symbols-outlined text-purple-400 text-4xl mb-4">policy</span>
+<h3 class="text-white font-bold text-lg">Govt. Agencies</h3>
+<p class="text-slate-400 text-sm mt-2">Providing standardized data for policy-making and environmental impact assessments.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer aria-labelledby="footer-heading" class="bg-surface-darker border-t border-white/10">
+<h2 class="sr-only" id="footer-heading">Footer</h2>
+<div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8">
+<div class="xl:grid xl:grid-cols-3 xl:gap-8">
+<div class="space-y-8">
+<div class="flex items-center gap-2 text-white">
+<span class="material-symbols-outlined text-secondary">view_in_ar</span>
+<span class="font-display font-bold text-lg">MicroVision AI</span>
+</div>
+<p class="text-sm leading-6 text-slate-400">
+                            Advancing environmental science through computer vision and deep learning.
+                        </p>
+<div class="flex space-x-6">
+<!-- Social icons placeholder -->
+<a class="text-slate-400 hover:text-white" href="#">
+<span class="sr-only">Twitter</span>
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+</a>
+</div>
+</div>
+<div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+<div class="md:grid md:grid-cols-2 md:gap-8">
+<div>
+<h3 class="text-sm font-semibold leading-6 text-white">Solutions</h3>
+<ul class="mt-6 space-y-4" role="list">
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Research</a></li>
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Government</a></li>
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Enterprise API</a></li>
+</ul>
+</div>
+<div class="mt-10 md:mt-0">
+<h3 class="text-sm font-semibold leading-6 text-white">Resources</h3>
+<ul class="mt-6 space-y-4" role="list">
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Documentation</a></li>
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">White Papers</a></li>
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Datasets</a></li>
+</ul>
+</div>
+</div>
+<div class="md:grid md:grid-cols-2 md:gap-8">
+<div>
+<h3 class="text-sm font-semibold leading-6 text-white">Company</h3>
+<ul class="mt-6 space-y-4" role="list">
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">About</a></li>
+<li><a class="text-sm leading-6 text-slate-400 hover:text-white" href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
+<p class="text-xs leading-5 text-slate-500">© 2026 MicroVision AI Labs. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+
+<div class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+<div class="relative w-[92vw] max-w-3xl rounded-2xl border border-white/10 bg-surface-darker p-6 shadow-2xl">
+<button class="js-close-demo absolute right-4 top-4 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-slate-300 hover:text-white" type="button">Close</button>
+<div class="mb-6">
+<div class="text-xs text-secondary font-mono mb-2">REAL_TIME_DETECTION</div>
+<h3 class="text-2xl font-display font-bold text-white" id="demoTitle">Run a live prediction</h3>
+<p class="mt-2 text-sm text-slate-400">Upload a microscope image and the model will classify the microplastic type.</p>
+</div>
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+<div class="rounded-xl border border-white/10 bg-surface-dark p-4">
+<label class="block text-sm font-semibold text-slate-200 mb-3" for="demoFile">Image file</label>
+<input class="w-full cursor-pointer rounded-lg border border-white/10 bg-surface-darker text-slate-200 file:mr-4 file:rounded-md file:border-0 file:bg-secondary/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-secondary hover:file:bg-secondary/30" id="demoFile" type="file" accept="image/*" />
+<div class="mt-4 overflow-hidden rounded-lg border border-white/10 bg-surface-darker">
+<img id="demoPreview" alt="Preview" class="hidden h-52 w-full object-cover" />
+<div id="demoPlaceholder" class="flex h-52 items-center justify-center text-xs text-slate-500">Preview appears here</div>
+</div>
+</div>
+<div class="rounded-xl border border-white/10 bg-surface-dark p-4">
+<div class="text-sm font-semibold text-slate-200">Prediction</div>
+<div class="mt-4 rounded-lg border border-white/10 bg-surface-darker p-4">
+<div class="text-xs text-slate-500" id="demoStatus">Awaiting image upload.</div>
+<div class="mt-3 text-2xl font-display font-bold text-secondary" id="demoResult">--</div>
+</div>
+<button class="mt-4 w-full rounded-lg bg-secondary/20 border border-secondary/40 px-4 py-2 text-sm font-bold text-secondary hover:bg-secondary/30" id="demoRun" type="button">Run Detection</button>
+<div class="mt-3 text-[11px] text-slate-500">Endpoint: <span class="font-mono">POST /predict</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+        const modal = document.getElementById("demoModal");
+        const openButtons = document.querySelectorAll(".js-open-demo");
+        const closeButtons = document.querySelectorAll(".js-close-demo");
+        const fileInput = document.getElementById("demoFile");
+        const preview = document.getElementById("demoPreview");
+        const placeholder = document.getElementById("demoPlaceholder");
+        const statusText = document.getElementById("demoStatus");
+        const resultText = document.getElementById("demoResult");
+        const runButton = document.getElementById("demoRun");
+
+        const openModal = () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        };
+
+        const closeModal = () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        };
+
+        openButtons.forEach((button) => button.addEventListener("click", openModal));
+        closeButtons.forEach((button) => button.addEventListener("click", closeModal));
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                preview.classList.add("hidden");
+                placeholder.classList.remove("hidden");
+                statusText.textContent = "Awaiting image upload.";
+                resultText.textContent = "--";
+                return;
+            }
+            const objectUrl = URL.createObjectURL(file);
+            preview.src = objectUrl;
+            preview.classList.remove("hidden");
+            placeholder.classList.add("hidden");
+            statusText.textContent = "Ready to run detection.";
+            resultText.textContent = "--";
+        });
+
+        runButton.addEventListener("click", async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                statusText.textContent = "Please upload an image first.";
+                return;
+            }
+
+            statusText.textContent = "Uploading image...";
+            resultText.textContent = "--";
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Prediction request failed.");
+                }
+
+                const data = await response.json();
+                statusText.textContent = "Prediction complete.";
+                resultText.textContent = data.prediction || "Unknown";
+            } catch (error) {
+                statusText.textContent = "Unable to reach the API. Ensure app.py is running.";
+                resultText.textContent = "--";
+            }
+        });
+    </script>
+</body></html>
